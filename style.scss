@@ -1,0 +1,212 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; // 10px
+  font-family: 'Poppins', sans-serif; // 'Montserrat', 'Roboto';
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  background-color: #fff;
+  overflow: hidden;
+
+  h1 {
+    position: relative;
+    margin: 15px;
+    font-size: 2.5rem;
+
+    button {
+      position: absolute;
+      right: 0;
+      transform: translate(-15%, -160%);
+      // z-index: 2;
+    }
+  }
+
+  .btn {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    padding: 10px 15px;
+  }
+
+  .btn-small {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    transform: translate(105%, -60%);
+  }
+
+  .btn-ghost {
+    border: none;
+    background-color: transparent;
+  }
+
+  .clear {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+  }
+
+  .cards {
+    perspective: 1000px;
+    position: relative;
+    height: 300px;
+    width: clamp(280px, 35vw, 500px);
+    max-width: 100%;
+    overflow: hidden;
+
+    .card {
+      position: absolute;
+      opacity: 0;
+      font-size: 1.7rem;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      transform: translateX(50%) rotateY(-10deg);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+
+      &.active {
+        opacity: 1;
+        cursor: pointer;
+        z-index: 10;
+        transform: translateX(0%) rotateY(0deg);
+      }
+
+      &.left {
+        transform: translateX(-50%) rotateY(10deg);
+      }
+
+      // rotate on click, set in js
+      &.show-answer .inner-card {
+        transform: rotateX(180deg);
+      }
+
+      .inner-card {
+        box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        // add this for 3d effect for fliping card
+        transform-style: preserve-3d;
+        transition: transform 0.4s ease;
+
+        .inner-card-front,
+        .inner-card-back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          // background makes them visible one at a time
+          background: #fff;
+          // this is property for children for fliping card
+          backface-visibility: hidden;
+        }
+
+        .inner-card-front {
+          transform: rotateX(0deg);
+          z-index: 2;
+        }
+
+        .inner-card-back {
+          transform: rotateX(180deg);
+        }
+
+        .inner-card-front::after,
+        .inner-card-back::after {
+          content: '\f021  Flip';
+          font-family: 'Font Awesome 5 Free';
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-weight: bold;
+          font-size: 1.6rem;
+          color: #ddd;
+        }
+      }
+    }
+  }
+
+  .navigation {
+    display: flex;
+    margin: 20px 0;
+
+    .nav-button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 1.6rem;
+    }
+
+    p {
+      margin: 0 25px;
+      font-size: 1.4rem;
+    }
+  }
+
+  .add-container {
+    // hidden
+    opacity: 0;
+    z-index: -1;
+
+    background-color: #f0f0f0;
+    border-top: 2px solid #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transition: 0.3s ease;
+
+    // when clicked on button, show container
+    &.show {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    h1 {
+      margin: 10px 0;
+    }
+
+    .form-group {
+      label {
+        display: block;
+        margin: 20px 0 10px;
+        font-size: 1.5rem;
+      }
+
+      textarea {
+        border: 1px solid #aaa;
+        border-radius: 3px;
+        font-size: 1.6rem;
+        padding: 1.2rem;
+        width: clamp(280px, 35vw, 500px);
+      }
+    }
+  }
+}
